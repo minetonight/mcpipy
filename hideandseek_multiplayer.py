@@ -6,15 +6,10 @@
 # mcpipy.com retrieved from URL below, written by stuffaboutcode
 # http://www.stuffaboutcode.com/2013/01/raspberry-pi-minecraft-hide-and-seek.html
 
-#import the minecraft.py module from the minecraft directory
 import mcpi.minecraft as minecraft
-#import minecraft block module
 import mcpi.block as block
-#import time, so delays can be used
 import time
-#import random module to create random number
 import random
-#import math module to use square root function
 import math
 import server
 
@@ -64,9 +59,7 @@ if __name__ == "__main__":
         playerPos = mc.player.getPos()
         #Has the player moved
         if lastPlayerPos != playerPos:
-            #print "lastDistanceFromBlock = " + str(lastDistanceFromBlock)
             distanceFromBlock = distanceBetweenPoints(randomBlockPos, playerPos)
-            #print "distanceFromBlock = " + str(distanceFromBlock)
             if distanceFromBlock < 2:
                 #found it!
                 seeking = False
@@ -85,3 +78,37 @@ if __name__ == "__main__":
     time.sleep(5)
   
     mc.postToChat("www.stuffaboutcode.com")
+    
+    
+"""    TODO
+1. multiplayer: 
+get all players and iterate them
+store them in dictionary with their last coordinates
+if player is not in the dictionary, add him with last coordintes
+
+2. not too spammy
+iterate every 5-10 seconds
+send messages as /w %playername%  if possible
+
+3. eternal program
+on each iteration check for connection, and if lost reconnect
+sleep 2^tries seconds and try to reconnect
+
+4. file storage
+store the current hidden block coordinates in file.
+On iteration read the file and if empty generate new treasure
+on tresure found erase the file and sleep 6-12h (random)
+
+5. hiding places
+read the hidind centres and radii from file (python parse yml?)
+the centres are around the overworld portals
+hide the block 
+ - always in the ground,
+ - 1-5 blocks below the surface (read getHeight(x, z))
+ - only if the block on the top is in [grass, GRASS_TALL, dirt, stone, gravel, sand, sandstone] 
+  (not in player property mostly)
+  (not lost in the ocean)
+ - precious block random from [block.DIAMOND_BLOCK, LAPIS_LAZULI_BLOCK, GOLD_BLOCK, EMERALD_BLOCK]
+
+
+"""

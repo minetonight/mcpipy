@@ -28,7 +28,7 @@ if __name__ == "__main__":
     mc = minecraft.Minecraft.create(server.address)
 
     #Post a message to the minecraft chat window
-    mc.postToChat("Hi, Minecraft - Auto Bridge Active")
+    mc.postToChat("Hi Minecraft - Auto Bridge Active")
     mc.postToChat("www.stuffaboutcode.com")
 
     #Get the players position

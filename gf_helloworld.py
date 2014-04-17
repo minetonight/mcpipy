@@ -7,4 +7,4 @@ import server
     @author: goldfish"""
 
 mc = minecraft.Minecraft.create( server.address )
-mc.postToChat("Hello, Minecraft!")
+mc.postToChat("Hello Minecraft!")
