@@ -28,12 +28,13 @@ def randDir():
 
 class MazeBuilder:
 	
-	def __init__(self, mazeCorner_vec3, mazeXSize, mazeZSize, floorMaterial, wallMaterial):
+	def __init__(self, mazeCorner_vec3, mazeXSize, mazeZSize, floorMaterial, wallMaterial_low, wallMaterial_up):
 		self.ppos = mazeCorner_vec3
 		self.mazeXSize = mazeXSize
 		self.mazeZSize = mazeZSize
 		self.floor_material_id = floorMaterial
-		self.wall_material_id = wallMaterial
+		self.wall_material_low = wallMaterial_low
+		self.wall_material_up = wallMaterial_up
 		
 		# Set the maximum length of a wall.
 		self.maxWallLen = 1
@@ -73,8 +74,8 @@ class MazeBuilder:
 
 	def makeWall(self, x, z):
 			self.mc.setBlock(x, self.ppos.y, z, self.floor_material_id)
-			self.mc.setBlock(x, self.ppos.y+1, z, self.floor_material_id)
-			self.mc.setBlock(x, self.ppos.y+2, z, self.wall_material_id)
+			self.mc.setBlock(x, self.ppos.y+1, z, self.wall_material_low)
+			self.mc.setBlock(x, self.ppos.y+2, z, self.wall_material_up)
 	#eof makeWall
 
 
@@ -171,8 +172,9 @@ if __name__ == "__main__":
 
 	#floor_material_id = block.AIR.id # to clean what you did :D
 	#wall_material_id = floor_material_id
-	floor_material_id = block.SANDSTONE.id
-	wall_material_id = floor_material_id
+	floor_material_id = block.REDSTONE_ORE.id
+	wall_material_up = (block.SANDSTONE_CHISELED.id, block.SANDSTONE_CHISELED.data)
+	wall_material_low = block.SANDSTONE.id
 
 	# Define the X and Y size of the self.maze including the outer walls.
 	# These values aren't checked but must be positive odd integers above 3.
@@ -186,6 +188,6 @@ if __name__ == "__main__":
 	pos.z = z0 - spawnZ - mazeZSize/2
 	pos.y = y0 - spawnY
 	
-	mazeBuilder = MazeBuilder(pos, mazeXSize, mazeZSize, floor_material_id, wall_material_id)
+	mazeBuilder = MazeBuilder(pos, mazeXSize, mazeZSize, floor_material_id, wall_material_low, wall_material_up)
 	mazeBuilder.createMaze()
 #eof main
