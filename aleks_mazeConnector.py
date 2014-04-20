@@ -41,6 +41,7 @@ class MazeConnector:
 				#find wall for the ladder
 				
 				"""    
+				2h of debugging can spare you some 5 minutes reading documentation 
 				0x2: Facing north (for ladders and signs, attached to the north side of a block)
 				0x3: Facing south
 				0x4: Facing west
