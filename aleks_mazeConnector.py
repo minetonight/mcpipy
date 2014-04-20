@@ -14,9 +14,7 @@ class MazeConnector:
 		self.maxX = max(vec3_from.x, vec3_to.x)
 		self.maxZ = max(vec3_from.z, vec3_to.z)
 		
-		if vec3_from.y != vec3_to.y:
-			raise Exception ("provide to corner points on the same level")
-		
+		assert vec3_from.y == vec3_to.y, "provide two corner points on the same Y level"
 		self.y_level = vec3_to.y 
 	#eof setRange
 	
