@@ -7,6 +7,7 @@ from mcpi.vec3 import Vec3
 from math import sqrt
 from aleks_mazeBuilder import MazeBuilder
 from aleks_mazeConnector import MazeConnector
+from aleks_mazeChestGenerator import MazeChestGenerator
 
 
 
@@ -44,7 +45,12 @@ if __name__ == "__main__":
 	maze_pos.y = y0 - spawnY
 	
 	mazeBuilder = MazeBuilder(maze_pos, mazeXSize, mazeZSize, maze_floor_material_id, maze_wall_material_low, maze_wall_material_up)
+	maze_Conn = MazeConnector()
+	maze_loot = MazeChestGenerator(Vec3(spawnX, spawnY, spawnZ))
+	
 	mazeBuilder.createMaze()
+	maze_loot.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
+	maze_loot.placeChests(mazeBuilder.mazeXSize/7)
 
 	mazeBuilder.ppos.y += 3 # go to next floor
 	mazeBuilder.ppos.x += 2 
@@ -53,8 +59,9 @@ if __name__ == "__main__":
 	mazeBuilder.mazeZSize -= 4
 
 	mazeBuilder.createMaze()
-	maze_Conn = MazeConnector()
 	maze_Conn.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
 	maze_Conn.connect(mazeBuilder.mazeXSize/1)
+	maze_loot.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
+	maze_loot.placeChests(mazeBuilder.mazeXSize/7)
 	
 #eof main

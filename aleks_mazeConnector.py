@@ -62,7 +62,7 @@ class MazeConnector:
 				mc.setBlock(randX, self.y_level, randZ, block.LADDER.id, direction) 
 				mc.setBlock(randX, self.y_level-1, randZ, block.LADDER.id, direction) 
 				connections += 1
-				print ("conn %s at %s, %s" % (connections, randX, randZ))
+				#print ("conn %s at %s, %s" % (connections, randX, randZ))
 		#eof while
 		
 	#eof connect
