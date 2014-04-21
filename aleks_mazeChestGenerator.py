@@ -80,11 +80,50 @@ class MazeChestGenerator:
 				mc.setBlock(randX, self.y_level+1, randZ, block.AIR.id)
 				mc.setBlock(randX, self.y_level, randZ, block.CHEST_TRAPPED.id, direction) 
 				chests += 1
-				print ("chest N%s at %s, %s, %s" % (chests, randX+self.spawnX, self.y_level+self.spawnY+1, randZ+self.spawnZ))
+				print ("chest N%s at /tp %s, %s, %s -> %s" % (chests, randX+self.spawnX, self.y_level+self.spawnY+1, randZ+self.spawnZ, self._chestContents()))
 		#eof while
 		
 	#eof placeChests
 	
+	
+	def _chestContents(self):
+		"""
+		Flesh						50%
+		Bones						50%
+		Gunpowder				50%
+		Iron Ingot			45%
+		Gold Ingot			25%
+		
+		Gold Helmet					25%
+		Gold Chestplate 		25%
+		Gold Leggings				25%
+		Gold Boots					25%
+		Chainmail Helmet		15%
+		Chainmail Chestplate 15%
+		Chainmail Leggings	15%
+		Chainmail Boots			15%
+		Gold Sword					22%
+		Iron Sword					12%
+		Diamond Sword				6%
+		
+		Name Tag						16%
+		Saddle							16%
+		Obsidian 						16%
+		
+		Diamond							10%
+		Iron Horse Armor		7%
+		Gold Horse Armor 		6%
+		Diamond Horse Armor 5%
+
+		Enchanted Book			6%				
+		Golden Apple				6%
+		"""
+		
+		lootStr = "[]"
+		
+		return lootStr
+	
+	#eof _chestContents
 	
 #eof class
 
