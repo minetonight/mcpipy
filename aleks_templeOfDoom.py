@@ -48,6 +48,8 @@ if __name__ == "__main__":
 	maze_Conn = MazeConnector()
 	maze_loot = MazeChestGenerator(Vec3(spawnX, spawnY, spawnZ))
 	
+    #TODO add loop
+    
 	mazeBuilder.createMaze()
 	maze_loot.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
 	maze_loot.placeChests(mazeBuilder.mazeXSize/7, 5)
