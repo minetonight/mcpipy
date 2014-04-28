@@ -50,7 +50,7 @@ if __name__ == "__main__":
 	
 	mazeBuilder.createMaze()
 	maze_loot.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
-	maze_loot.placeChests(mazeBuilder.mazeXSize/7)
+	maze_loot.placeChests(mazeBuilder.mazeXSize/7, 5)
 
 	mazeBuilder.ppos.y += 3 # go to next floor
 	mazeBuilder.ppos.x += 2 
@@ -62,6 +62,6 @@ if __name__ == "__main__":
 	maze_Conn.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
 	maze_Conn.connect(mazeBuilder.mazeXSize/1)
 	maze_loot.setRange(mazeBuilder.ppos, mazeBuilder.ppos+Vec3(mazeBuilder.mazeXSize, 0, mazeBuilder.mazeZSize))
-	maze_loot.placeChests(mazeBuilder.mazeXSize/7)
+	maze_loot.placeChests(mazeBuilder.mazeXSize/7, 7)
 	
 #eof main

@@ -3,6 +3,7 @@ import mcpi.block as block
 import sys, random
 from math import *
 from random import randint as rand
+from random import shuffle
 import server
 from mcpi.vec3 import Vec3
 
@@ -12,6 +13,8 @@ class MazeChestGenerator:
 		self.spawnX = worldSpawn_vec3.x
 		self.spawnY = worldSpawn_vec3.y
 		self.spawnZ = worldSpawn_vec3.z
+		
+		self._defineLoot()
 	#eof init
 	
 	
@@ -27,7 +30,7 @@ class MazeChestGenerator:
 	#eof setRange
 	
 	
-	def placeChests(self, num_chests):
+	def placeChests(self, num_chests, lootItemsPerChest):
 		
 		# Connect to Minecraft.
 		try:
@@ -80,50 +83,76 @@ class MazeChestGenerator:
 				mc.setBlock(randX, self.y_level+1, randZ, block.AIR.id)
 				mc.setBlock(randX, self.y_level, randZ, block.CHEST_TRAPPED.id, direction) 
 				chests += 1
-				print ("chest N%s at /tp %s, %s, %s -> %s" % (chests, randX+self.spawnX, self.y_level+self.spawnY+1, randZ+self.spawnZ, self._chestContents()))
+				print ("chest N%s at /tp %s %s %s -> %s" % (chests, randX+self.spawnX, self.y_level+self.spawnY+1, randZ+self.spawnZ, self._getChestContents(lootItemsPerChest)))
 		#eof while
 		
 	#eof placeChests
 	
 	
-	def _chestContents(self):
-		"""
-		Flesh						50%
-		Bones						50%
-		Gunpowder				50%
-		Iron Ingot			45%
-		Gold Ingot			25%
+	
+	def _getChestContents(self, numLootItems):
 		
-		Gold Helmet					25%
-		Gold Chestplate 		25%
-		Gold Leggings				25%
-		Gold Boots					25%
-		Chainmail Helmet		15%
-		Chainmail Chestplate 15%
-		Chainmail Leggings	15%
-		Chainmail Boots			15%
-		Gold Sword					22%
-		Iron Sword					12%
-		Diamond Sword				6%
+		lootStr = "["
 		
-		Name Tag						16%
-		Saddle							16%
-		Obsidian 						16%
-		
-		Diamond							10%
-		Iron Horse Armor		7%
-		Gold Horse Armor 		6%
-		Diamond Horse Armor 5%
-
-		Enchanted Book			6%				
-		Golden Apple				6%
-		"""
-		
-		lootStr = "[]"
-		
+		for i in range(numLootItems):
+			lootStr += self._getLootItem()
+			lootStr += ", "
+			
+		lootStr += "]"
 		return lootStr
 	
 	#eof _chestContents
+	
+	def _getLootItem(self):
+		return self.loot.pop(0)
+	#eof getLootItem
+	
+	def _defineLoot(self):
+		"""
+		Define maximum items of a kind to be spread in the chests.
+		"""
+		
+		self._lootDef = (
+			("Flesh",						50),
+			("Bones",						50),
+			("Gunpowder",				50),
+			("Iron Ingot",			45),
+			("Gold Ingot",			25),
+			
+			("Gold Helmet",					25),
+			("Gold Chestplate", 		25),
+			("Gold Leggings",				25),
+			("Gold Boots",					25),
+			("Chainmail Helmet",		15),
+			("Chainmail Chestplate", 15),
+			("Chainmail Leggings",	15),
+			("Chainmail Boots",			15),
+			("Gold Sword",					22),
+			("Iron Sword",					12),
+			("Diamond Sword",				6),
+			
+			("Name Tag",						16),
+			("Saddle",							16),
+			("Obsidian", 						16),
+			
+			("Diamond",							10),
+			("Iron Horse Armor",		7),
+			("Gold Horse Armor", 		6),
+			("Diamond Horse Armor", 5),
+
+			("Enchanted Book",			6),				
+			("Golden Apple",				6),
+		)
+		
+		self.loot = []
+		for pair in self._lootDef:
+			self.loot.extend([ pair[0] ] * pair[1] ) # e.g ["tag"] * 6 
+		#eof for
+		
+		shuffle(self.loot)
+		#print "loot is %s" % (self.loot)
+		
+	#eof defineLoot()
 	
 #eof class
 
