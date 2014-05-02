@@ -8,7 +8,49 @@ from math import sqrt
 from aleks_mazeBuilder import MazeBuilder
 from aleks_mazeConnector import MazeConnector
 from aleks_mazeChestGenerator import MazeChestGenerator
+from aleks_pyramideBuilder import PyramideBuilder
 
+class TempleBuilder:
+  
+  def __init__(self, mazeLevels, vec3_centrePos, vec3_spawn):
+    self.mazeLevels = mazeLevels
+    self.templeCentre = vec3_centrePos
+    self.spawn = vec3_spawn
+    
+    self.topMazeWidth = 5
+  #eof init
+  
+  def build(self):
+    self._buildPyramide()
+    self._buildMazes()
+  #eof build
+  
+  def _buildPyramide(self):
+    # base width depending on the levels
+    # each level adds 2*mazeHeight=6 more blocks to the top maze with
+    baseWidth = (self.mazeLevels * (3 * 2)) + self.topMazeWidth
+	#TODO fix indentation
+		sideX = baseWidth # base dimentions
+		sideZ = baseWidth
+		slopeXRatio = 1 # the vertical size of pyramide steps
+		slopeZRatio = 1
+		offsetX = 1 # the horisontal size of the pyramide steps
+		offsetZ = 1
+		#material_id = block.AIR.id 				# to clean what you did :D
+		material_id = block.GOLD_BLOCK.id
+	
+		#calc starting corner point
+		vec3_corner = self.templeCentre - self.spawn - Vec3( sideX/2, 0, sideZ/2)
+		#x1 = x0 - sideX/2 - spawnX
+		#y1 = y0 - spawnY
+		#z1 = z0 - sideZ/2 - spawnZ
+		
+		builder = PyramideBuilder(vec3_corner, sideX, sideZ, slopeXRatio, slopeZRatio, offsetX, offsetZ, material_id)
+    builder.createPyramide()
+    
+  #eof _buildPyramide
+  
+#eof TempleBuilder
 
 
 if __name__ == "__main__":
