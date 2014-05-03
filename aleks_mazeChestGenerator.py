@@ -104,7 +104,9 @@ class MazeChestGenerator:
 	#eof _chestContents
 	
 	def _getLootItem(self):
-		return self.loot.pop(0)
+		res = self.loot.pop(0)
+		print "/give Admin " + res
+		return res
 	#eof getLootItem
 	
 	def _defineLoot(self):
@@ -113,8 +115,8 @@ class MazeChestGenerator:
 		"""
 		
 		self._lootDef = (
-			("Flesh",						50),
-			("Bones",						50),
+			("Flesh",						100),
+			("Bones",						60),
 			("Gunpowder",				50),
 			("Iron Ingot",			45),
 			("Gold Ingot",			25),
@@ -128,17 +130,17 @@ class MazeChestGenerator:
 			("Chainmail Leggings",	15),
 			("Chainmail Boots",			15),
 			("Gold Sword",					22),
-			("Iron Sword",					12),
+			("Iron Sword",					18),
 			("Diamond Sword",				6),
 			
-			("Name Tag",						16),
-			("Saddle",							16),
-			("Obsidian", 						16),
+			("Name Tag",						18),
+			("Saddle",							18),
+			("Obsidian", 						36),
 			
-			("Diamond",							10),
-			("Iron Horse Armor",		7),
-			("Gold Horse Armor", 		6),
-			("Diamond Horse Armor", 5),
+			("Diamond",							18),
+			("Iron Horse Armor",		9),
+			("Gold Horse Armor", 		8),
+			("Diamond Horse Armor", 6),
 
 			("Enchanted Book",			6),				
 			("Golden Apple",				6),
