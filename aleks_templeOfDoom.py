@@ -22,12 +22,13 @@ class TempleBuilder:
   
   def build(self):
     self._buildPyramide()
+    #self._buildMayanPyramide() # TODO
     self._buildMazes()
   #eof build
   
   def _buildPyramide(self):
     # base width depending on the levels
-    # each level adds 2*mazeHeight=6 more blocks to the top maze with
+    # each level adds 2*mazeHeight=6 more blocks to the top maze width
     self.baseWidth = (self.mazeLevels * (3 * 2)) + self.topMazeWidth
 	  
     sideX = self.baseWidth # base dimentions
@@ -49,6 +50,40 @@ class TempleBuilder:
     builder.createPyramide()
     
   #eof _buildPyramide
+  
+  
+  def _buildMayanPyramide(self):
+    """north south stairs"""
+    #stairs
+    #stairs side 1
+    #stairs side 2
+    
+    """east west stairs"""
+    #stairs
+    #stairs side 1
+    #stairs side 2
+    
+    """main pyramide"""
+    # base width depending on the levels
+    # each level adds 2*mazeHeight=6 more blocks to the top maze width
+    self.baseWidth = (self.mazeLevels * (3 * 2)) + self.topMazeWidth
+	  
+    sideX = self.baseWidth # base dimentions
+    sideZ = self.baseWidth
+    slopeXRatio = 3 # the vertical size of pyramide steps
+    slopeZRatio = 3
+    offsetX = 3 # the horisontal size of the pyramide steps
+    offsetZ = 3
+    #material_id = block.AIR.id 				# to clean what you did :D
+    material_id = block.COBBLESTONE.id # TODO MOSSY
+    
+    #calc starting corner point
+    self.vec3_corner = self.templeCentre - self.spawn - Vec3( sideX/2, 0, sideZ/2)
+    
+    builder = PyramideBuilder(self.vec3_corner, sideX, sideZ, slopeXRatio, slopeZRatio, offsetX, offsetZ, material_id)
+    builder.createPyramide()
+    
+  #eof _buildMayanPyramide
   
   
   def _buildMazes(self):
@@ -78,7 +113,6 @@ class TempleBuilder:
     
     
     
-    
     while mazeXSize > self.topMazeWidth:
       currLevel += 1
       mazeXSize -= 6
@@ -97,8 +131,6 @@ class TempleBuilder:
       
       maze_Conn.setRange(maze_pos, maze_end)
       maze_Conn.connect(mazeXSize/1)                       #TODO
-	
-      
     #eof while > topMazeWidth
     
   #eof _buildMazes
