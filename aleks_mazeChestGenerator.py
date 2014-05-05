@@ -48,6 +48,7 @@ class MazeChestGenerator:
 			diagonals = 0
 			
 			if mc.getBlock(randX, self.y_level, randZ) == block.AIR.id or mc.getBlock(randX, self.y_level, randZ) == block.CHEST_TRAPPED.id:
+				print "checked %s, %s, %s - not our case"%(randX, self.y_level, randZ)
 				continue
 			
 			"""find the end of a wall, air at exactly three of the sides
@@ -83,7 +84,7 @@ class MazeChestGenerator:
 				mc.setBlock(randX, self.y_level+1, randZ, block.AIR.id)
 				mc.setBlock(randX, self.y_level, randZ, block.CHEST_TRAPPED.id, direction) 
 				chests += 1
-				print ("chest N%s at /tp %s %s %s -> %s" % (chests, randX+self.spawnX, self.y_level+self.spawnY+1, randZ+self.spawnZ, self._getChestContents(lootItemsPerChest)))
+				print ("chest N%s(of %s) at /tp %s %s %s -> %s" % (chests, num_chests, randX+self.spawnX, self.y_level+self.spawnY, randZ+self.spawnZ, self._getChestContents(lootItemsPerChest)))
 		#eof while
 		
 	#eof placeChests

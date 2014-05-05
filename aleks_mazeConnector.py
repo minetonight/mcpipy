@@ -54,7 +54,7 @@ class MazeConnector:
 				elif mc.getBlock(randX+1, self.y_level-1, randZ) != block.AIR.id:
 					direction = 0x4 # east
 				else:
-					print ("crossroad at %s, %s; skipping" % (randX, randZ))
+					print ("crossroad at %s, %s, %s; skipping" % (randX, self.y_level-1, randZ))
 					continue
 				
 					
@@ -62,7 +62,7 @@ class MazeConnector:
 				mc.setBlock(randX, self.y_level, randZ, block.LADDER.id, direction) 
 				mc.setBlock(randX, self.y_level-1, randZ, block.LADDER.id, direction) 
 				connections += 1
-				#print ("conn %s at %s, %s" % (connections, randX, randZ))
+				print ("conn %s(of %s) at %s, %s, %s" % (connections, num_junctions,  randX, self.y_level, randZ))
 		#eof while
 		
 	#eof connect
