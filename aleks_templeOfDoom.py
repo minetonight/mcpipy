@@ -87,7 +87,7 @@ class TempleBuilder:
   
   
   def _buildMazes(self):
-    	"""Maze settings """
+    """Maze settings """
     maze_floor_material_id = block.REDSTONE_ORE.id
     maze_wall_material_up = (block.SANDSTONE_CHISELED.id, block.SANDSTONE_CHISELED.data)
     maze_wall_material_low = block.SANDSTONE.id
@@ -116,7 +116,7 @@ class TempleBuilder:
     while mazeXSize > self.topMazeWidth:
       currLevel += 1
       mazeXSize -= 6
-      mazeZSide -= 6
+      mazeZSize -= 6
       maze_pos += delta
       
       mazeBuilder.ppos = maze_pos
