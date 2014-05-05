@@ -39,7 +39,7 @@ class MazeConnector:
 		
 		connections = 0
 		
-		while connections < num_junctions:
+		while connections < num_junctions and len(self._pairs) > 0:
 			randpos = self._pairs.pop(0)
 			randX = randpos[0]
 			randZ = randpos[1]
@@ -73,6 +73,7 @@ class MazeConnector:
 				mc.setBlock(randX, self.y_level, randZ, block.LADDER.id, direction) 
 				mc.setBlock(randX, self.y_level-1, randZ, block.LADDER.id, direction) 
 				connections += 1
+				print "\n"
 				print ("conn %s(of %s) at %s, %s, %s" % (connections, num_junctions,  randX, self.y_level, randZ))
 		#eof while
 		

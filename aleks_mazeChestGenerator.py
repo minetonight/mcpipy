@@ -49,7 +49,7 @@ class MazeChestGenerator:
 		
 		chests = 0
 		
-		while chests < num_chests:
+		while chests < num_chests and len(self._pairs) > 0:
 			randpos = self._pairs.pop(0)
 			randX = randpos[0]
 			randZ = randpos[1]
@@ -95,6 +95,7 @@ class MazeChestGenerator:
 				mc.setBlock(randX, self.y_level+1, randZ, block.AIR.id)
 				mc.setBlock(randX, self.y_level, randZ, block.CHEST_TRAPPED.id, direction) 
 				chests += 1
+				print "\n"
 				print ("chest N%s(of %s) at /tp %s %s %s -> %s" % (chests, num_chests, randX+self.spawnX, self.y_level+self.spawnY-1, randZ+self.spawnZ, self._getChestContents(lootItemsPerChest)))
 		#eof while
 		
@@ -117,7 +118,6 @@ class MazeChestGenerator:
 	
 	def _getLootItem(self):
 		res = self.loot.pop(0)
-		print "/give Admin " + res
 		return res
 	#eof getLootItem
 	
@@ -127,45 +127,46 @@ class MazeChestGenerator:
 		"""
 		
 		self._lootDef = (
-			("Flesh",						100),
-			("Bones",						60),
-			("Gunpowder",				50),
-			("Iron Ingot",			45),
-			("Gold Ingot",			25),
+			("rotten_flesh",				100),
+			("Bone",								60),
+			("Gunpowder",						50),
+			("Iron_Ingot",					45),
+			("Gold_Ingot",					25),
 			
-			("Gold Helmet",					25),
-			("Gold Chestplate", 		25),
-			("Gold Leggings",				25),
-			("Gold Boots",					25),
-			("Chainmail Helmet",		15),
-			("Chainmail Chestplate", 15),
-			("Chainmail Leggings",	15),
-			("Chainmail Boots",			15),
-			("Gold Sword",					22),
-			("Iron Sword",					18),
-			("Diamond Sword",				6),
+			("Gold_Helmet",					25),
+			("Gold_Chestplate", 		25),
+			("Gold_Leggings",				25),
+			("Gold_Boots",					25),
+			("Chainmail_Helmet",		15),
+			("Chainmail_Chestplate", 15),
+			("Chainmail_Leggings",	15),
+			("Chainmail_Boots",			15),
+			("Gold_Sword",					22),
+			("Iron_Sword",					18),
+			("Diamond_Sword",				6),
 			
-			("Name Tag",						18),
+			("Name_Tag",						18),
 			("Saddle",							18),
 			("Obsidian", 						36),
 			
 			("Diamond",							18),
-			("Iron Horse Armor",		9),
-			("Gold Horse Armor", 		8),
-			("Diamond Horse Armor", 6),
+			("Iron_Barding",				9),
+			("Gold_Barding", 				8),
+			("Diamond_Barding", 		6),
 
-			("Enchanted Book",			6),				
-			("Golden Apple",				6),
+			("Golden_Apple",				6),
+			("Enchanted_Book",			6),				
 		)
 		
 		self.loot = []
 		for pair in self._lootDef:
+			print "/give Admin %s %s" % (pair[0], pair[1])
 			self.loot.extend([ pair[0] ] * pair[1] ) # e.g ["tag"] * 6 
 		#eof for
 		
 		shuffle(self.loot)
-		#print "loot is %s" % (self.loot)
 		
+		print "==eof def loot=="
 	#eof defineLoot()
 	
 #eof class
