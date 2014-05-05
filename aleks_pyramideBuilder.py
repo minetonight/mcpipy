@@ -11,8 +11,9 @@ class PyramideBuilder:
 		self.x1 = corner_vec3.x
 		self.y1 = corner_vec3.y
 		self.z1 = corner_vec3.z
-		self.sideX = sideX # base dimentions
-		self.sideZ = sideZ
+		# base dimentions
+		self.sideX = sideX-1 # -1 hack for the rounding error
+		self.sideZ = sideZ-1
 		self.slopeXRatio = slopeXRatio # the vertical size of pyramide steps
 		self.slopeZRatio = slopeZRatio
 		self.offsetX = offsetX  # the horisontal size of the pyramide steps
@@ -63,10 +64,10 @@ if __name__ == "__main__":
 	y0 = 119
 	z0 = 86
 
-	sideX = 32 # base dimentions
-	sideZ = 5
+	sideX = 9 # base dimentions
+	sideZ = 8
 	slopeXRatio = 1 # the vertical size of pyramide steps
-	slopeZRatio = 0
+	slopeZRatio = 1
 	offsetX = 1 # the horisontal size of the pyramide steps
 	offsetZ = 1
 	#material_id = block.AIR.id 				# to clean what you did :D
