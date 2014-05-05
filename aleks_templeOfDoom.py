@@ -121,16 +121,17 @@ class TempleBuilder:
       
       mazeBuilder.ppos = maze_pos
       mazeBuilder.mazeXSize = mazeBuilder.mazeZSize = mazeXSize
+      print "building maze level %s ( %s wide)"%(currLevel, mazeXSize)
       mazeBuilder.createMaze()
       
       maze_end = maze_pos + Vec3(mazeXSize, 0, mazeZSize)
-      numChests = mazeXSize/5                             #TODO
-      itemsPerChest = 27 / numChests                       #TODO
+      numChests = mazeXSize/5
+      itemsPerChest = 27 / numChests
       maze_loot.setRange(maze_pos, maze_end)
       maze_loot.placeChests(numChests, itemsPerChest)
       
       maze_Conn.setRange(maze_pos, maze_end)
-      maze_Conn.connect(mazeXSize/1)                       #TODO
+      maze_Conn.connect((mazeXSize-2)/3)
     #eof while > topMazeWidth
     
   #eof _buildMazes
@@ -148,12 +149,13 @@ if __name__ == "__main__":
   spawn = Vec3(spawnX, spawnY, spawnZ)
   
   # temple center coordinates
-  x0 = 321
-  z0 = 86
-  y0 = 119
+  # in the middle of a jungle
+  x0 = 0
+  z0 = 0
+  y0 = 68
   centre = Vec3(x0, y0, z0)
   
-  levels = 18 # limited by the 490 loot items
+  levels = 10 # limited by the 490 loot items
   	
   temple = TempleBuilder(levels, centre, spawn)
   temple.build()
