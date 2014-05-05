@@ -27,6 +27,14 @@ class MazeChestGenerator:
 		
 		assert vec3_from.y == vec3_to.y, "provide two corner points on the same Y level"
 		self.y_level = vec3_to.y + 1 # one above the floor
+		
+		#randomization optimization
+		self._pairs = []
+		for i in range(self.minX, self.maxX):
+			for j in range(self.minZ, self.maxZ):
+				self._pairs.append((i, j))
+		shuffle(self._pairs)
+		
 	#eof setRange
 	
 	
@@ -42,13 +50,16 @@ class MazeChestGenerator:
 		chests = 0
 		
 		while chests < num_chests:
-			randX = rand(self.minX, self.maxX)
-			randZ = rand(self.minZ, self.maxZ)
+			randpos = self._pairs.pop(0)
+			randX = randpos[0]
+			randZ = randpos[1]
+			
 			corridors = 0
 			diagonals = 0
 			
 			if mc.getBlock(randX, self.y_level, randZ) == block.AIR.id or mc.getBlock(randX, self.y_level, randZ) == block.CHEST_TRAPPED.id:
-				print "checked %s, %s, %s - not our case"%(randX, self.y_level, randZ)
+				print ".",
+				#print "checked %s, %s, %s - not our case"%(randX, self.y_level, randZ)
 				continue
 			
 			"""find the end of a wall, air at exactly three of the sides
@@ -84,7 +95,7 @@ class MazeChestGenerator:
 				mc.setBlock(randX, self.y_level+1, randZ, block.AIR.id)
 				mc.setBlock(randX, self.y_level, randZ, block.CHEST_TRAPPED.id, direction) 
 				chests += 1
-				print ("chest N%s(of %s) at /tp %s %s %s -> %s" % (chests, num_chests, randX+self.spawnX, self.y_level+self.spawnY, randZ+self.spawnZ, self._getChestContents(lootItemsPerChest)))
+				print ("chest N%s(of %s) at /tp %s %s %s -> %s" % (chests, num_chests, randX+self.spawnX, self.y_level+self.spawnY-1, randZ+self.spawnZ, self._getChestContents(lootItemsPerChest)))
 		#eof while
 		
 	#eof placeChests

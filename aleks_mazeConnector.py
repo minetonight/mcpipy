@@ -3,6 +3,7 @@ import mcpi.block as block
 import sys, random
 from math import *
 from random import randint as rand
+from random import shuffle
 import server
 from mcpi.vec3 import Vec3
 
@@ -16,6 +17,14 @@ class MazeConnector:
 		
 		assert vec3_from.y == vec3_to.y, "provide two corner points on the same Y level"
 		self.y_level = vec3_to.y 
+		
+		#randomization optimization
+		self._pairs = []
+		for i in range(self.minX, self.maxX):
+			for j in range(self.minZ, self.maxZ):
+				self._pairs.append((i, j))
+		shuffle(self._pairs)
+		
 	#eof setRange
 	
 	
@@ -31,8 +40,9 @@ class MazeConnector:
 		connections = 0
 		
 		while connections < num_junctions:
-			randX = rand(self.minX, self.maxX)
-			randZ = rand(self.minZ, self.maxZ)
+			randpos = self._pairs.pop(0)
+			randX = randpos[0]
+			randZ = randpos[1]
 			
 			if mc.getBlock(randX, self.y_level+1, randZ) == block.AIR.id and mc.getBlock(randX, self.y_level-1, randZ) == block.AIR.id:
 				
@@ -54,7 +64,8 @@ class MazeConnector:
 				elif mc.getBlock(randX+1, self.y_level-1, randZ) != block.AIR.id:
 					direction = 0x4 # east
 				else:
-					print ("crossroad at %s, %s, %s; skipping" % (randX, self.y_level-1, randZ))
+					print ",",
+					#print ("crossroad at %s, %s, %s; skipping" % (randX, self.y_level-1, randZ))
 					continue
 				
 					
