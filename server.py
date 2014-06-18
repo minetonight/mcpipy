@@ -13,7 +13,7 @@ address = "127.0.0.1"
 # If you are running the scripts on a machine other than the raspberry pi, then put the rasberry pi's
 # ip address here
 address = "192.168.1.21"
-address = "aleksandarnp.no-ip.biz"
+address = "mcpy.robopartans.com"
 
 # If you are developing/testing against the RaspberyJuice Bukkit server, you may find that certain APIs are not
 # implemented like GetBlockWithData.
