@@ -9,7 +9,10 @@ import random # random generator
 def main():
   mc = minecraft.Minecraft.create(server.address)
   
-  mc.setBlocks(-1, 0, 0, 1, 0, 3, block.OBSIDIAN) # създава черно поле за игра
+  student_index = 3 # поредният номер на ученика в групата
+  offset = student_index * 5 # отместване на полетата едно спрямо началната позиция
+  
+  mc.setBlocks((-1 + offset), 0, 0, (1 + offset), 0, 3, block.OBSIDIAN) # създава черно поле за игра
 
   mc.postToChat("<MC RockPaperScissors> Choose your symbols!")
   print("<MC RockPaperScissors> Choose your symbols!")
@@ -62,10 +65,9 @@ def main():
     cpu_block = block.IRON_BLOCK
     
   
-  
-  
-  mc.setBlock(0, 0, 1, player_block)
-  mc.setBlock(0, 0, 2, cpu_block) 
+  # визуализация на избраните символи
+  mc.setBlock((0+offset), 0, 1, player_block)
+  mc.setBlock((0+offset), 0, 2, cpu_block) 
   
   mc.postToChat("<MC RockPaperScissors> "+ message) 
   print("<MC RockPaperScissors> " + message) 
