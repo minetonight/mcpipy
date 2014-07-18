@@ -15,7 +15,7 @@ def main():
     time.sleep(3) # pause 3 seconds
     mc.setBlock(3, 3, 3, block.AIR) # изчистване на блокчето
     mc.postToChat("Готово :-)")
-    print "McPy програмата завърши" 
+    print("McPy програмата завърши") 
 
 
 
