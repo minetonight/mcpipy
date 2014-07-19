@@ -1,7 +1,7 @@
 import random
 import time
 
-daljina_pole = 9
+daljina_pole = 50
 broy_igrachi = input("Vavedi broya igrachi <10: ")
 pozicii = [0] * broy_igrachi
 simvoli_igrachi = ['A', 'I', 'T', 'V', 'O', 'W', 'X', 'Y', 'M', 'H']
