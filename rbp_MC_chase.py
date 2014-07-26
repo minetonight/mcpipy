@@ -27,36 +27,44 @@ def main():
   
   
   while True:
-    time.sleep(1) # pause 1 second
     command = raw_input("Enter command [W, S, A, D, E, X]:")
     
     new_x = my_x
     new_y = my_y
     new_z = my_z
+    changed = False
     
     if (command == "W" or command == "w") and my_x < borders:
       new_x += 1
+      changed = True
     if (command == "S" or command == "s") and my_x > -1*borders:
       new_x -= 1
+      changed = True
     if (command == "D" or command == "d") and my_z < borders:
       new_z += 1
+      changed = True
     if (command == "A" or command == "a") and my_z > -1*borders:
       new_z -= 1
+      changed = True
     if (command == "E" or command == "e") and my_y < borders:
       new_y += 1
+      changed = True
     if (command == "X" or command == "x") and my_y > -1*borders:
       new_y -= 1
+      changed = True
     
-    if mc.getBlock(new_x, new_y, new_z) != air:
-      my_score += 1
-      mc.postToChat("%s got %s pts." % (my_name, my_score))
+    if changed:
+      if mc.getBlock(new_x, new_y, new_z) != air:
+        my_score += 1
+        mc.postToChat("%s got %s pts." % (my_name, my_score))
+      
+      mc.setBlock(my_x, my_y, my_z, air)
+      mc.setBlock(new_x, new_y, new_z, my_block)
     
-    mc.setBlock(my_x, my_y, my_z, air)
-    mc.setBlock(new_x, new_y, new_z, my_block)
-  
-    my_x = new_x
-    my_y = new_y
-    my_z = new_z
+      my_x = new_x
+      my_y = new_y
+      my_z = new_z
+      time.sleep(1) # pause 1 second
 
 
 
