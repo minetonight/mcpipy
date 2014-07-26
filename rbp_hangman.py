@@ -1,23 +1,17 @@
-#started 22:50
+"""took 43 min to develop on a tablet"""
 import random
-
+  
 words = ["implementation"]
 
 word = words[random.randint(0, 0)]
-
-letters = []
-
-#for index in range(len(word)):
-#    letters[index] = word
-
 tries = 0
 guess = ""
 
 while tries < 10:
 
-    for index in range(len(word)):
-        if word[index] == guess:
-            print( word[index] ),
+    for letter in range(len(word)):
+        if word[letter] == guess:
+            print( word[letter] ),
         else:
             print("_"),
             
@@ -29,6 +23,3 @@ if word == guess:
     print("You win. You live!")
 else:
     print("You lose. Hanged!")
-    
-    
-#working at 23:33 on tablet
