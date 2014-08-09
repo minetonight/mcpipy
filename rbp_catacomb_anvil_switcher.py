@@ -9,7 +9,7 @@ class AnvilSwitcher:
     
   def __init__(self, vec3_centrePos, vec3_spawn):
     
-    offset = 9
+    offset = 7
     depth = 8 * 8
     centre = vec3_centrePos - vec3_spawn
     
@@ -37,7 +37,7 @@ class AnvilSwitcher:
     ANVIL = block.ANVIL.id
     counter = 0
     
-    for y in range(self.minY, self.maxY):
+    for y in reversed(range(self.minY, self.maxY)):
       time.sleep(2)
       for z in range(self.minZ, self.maxZ):
         time.sleep(1)
@@ -77,13 +77,17 @@ if __name__ == "__main__":
              ]
   
   for centre in centres:
-    print ("Working on %s" % (centre) )
-    
-    switcher = AnvilSwitcher(centre, spawn)
-    switcher.switch()
-    
-    print ("Moving to next catacomb!")
-    time.sleep(5)
+    try:
+        
+      print ("Working on %s" % (centre) )
+      
+      switcher = AnvilSwitcher(centre, spawn)
+      switcher.switch()
+      
+      print ("Moving to next catacomb!")
+      time.sleep(5)
+    except Exception, e:
+      print ("Something happened: %s" % (e.message))
     
 #eof main
  
