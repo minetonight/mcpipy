@@ -67,13 +67,13 @@ if __name__ == "__main__":
   
   # catacombs centre coordinates
   centres = [
-             Vec3(47, 63, 756),
-             Vec3(2210, 64, 1601),
-             Vec3(-3688, 106, -1136),
-             Vec3(12864, 71, -7620),
-             Vec3(27352, 75, -3078),
-             Vec3(697, 64, 9417),
-             Vec3(20, 60, 9244),
+             Vec3(2210, 64, 1601), # frosen island
+             Vec3(27352, 75, -3078), # dark messa
+             Vec3(47, 63, 756), # lost jungle
+             Vec3(-3688, 106, -1136), # MontainBase
+             Vec3(12864, 71, -7620), # north pole
+             Vec3(697, 64, 9417), # marchmoorMare
+             Vec3(20, 60, 9244), # BlackForest
              ]
   
   for centre in centres:
