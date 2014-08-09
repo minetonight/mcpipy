@@ -9,7 +9,7 @@ class AnvilSwitcher:
     
   def __init__(self, vec3_centrePos, vec3_spawn):
     
-    offset = 200
+    offset = 9
     depth = 8 * 8
     centre = vec3_centrePos - vec3_spawn
     
@@ -19,33 +19,35 @@ class AnvilSwitcher:
     self.maxY = centre.y + 3
     self.minZ = centre.z - offset
     self.maxZ = centre.z + offset
+    
   #eof init
   
   
   def switch(self):
     
-    if not self.mc:
-      # Connect to Minecraft.
-      try:
-          self.mc = minecraft.Minecraft.create(server.address)
-      except:
-          print "Cannot connect to Minecraft."
-          sys.exit(0)
-    
+    # Connect to Minecraft.
+    try:
+      self.mc = minecraft.Minecraft.create(server.address)
+    except:
+      print "Cannot connect to Minecraft."
+      sys.exit(0)
+  
     
     IRON_BLOCK = block.IRON_BLOCK.id
     ANVIL = block.ANVIL.id
     counter = 0
     
     for y in range(self.minY, self.maxY):
+      time.sleep(2)
       for z in range(self.minZ, self.maxZ):
+        time.sleep(1)
         for x in range(self.minX, self.maxX):
+          time.sleep(0.3)
+          print("Checked x(%s of %s) y(%s of %s) z(%s of %s)" % (x, self.maxX, y, self.maxY, z, self.maxZ) )
           if self.mc.getBlock(x, y, z) == IRON_BLOCK:
             self.mc.setBlock(x, y, z, ANVIL)
             counter += 1
             print("   Oh, I found one! %s so far!" % (counter))
-        time.sleep(1)
-        print("Checked x(%s of %s) y(%s of %s) z(%s of %s)" % (x, maxX, y, maxY, z, maxZ) )
     
     
   #eof switch
@@ -64,13 +66,15 @@ if __name__ == "__main__":
   spawn = Vec3(spawnX, spawnY, spawnZ)
   
   # catacombs centre coordinates
-  centres = [Vec3(55, 63, 758),
-             Vec3(2214, 64, 1600),
-             Vec3(-3686, 106, -1139),
-             Vec3(12859, 71, -7621),
-             Vec3(27344, 75, -3080),
-             Vec3(700, 64, 9418),
-             Vec3(0, 57, 9250)]
+  centres = [
+             Vec3(47, 63, 756),
+             Vec3(2210, 64, 1601),
+             Vec3(-3688, 106, -1136),
+             Vec3(12864, 71, -7620),
+             Vec3(27352, 75, -3078),
+             Vec3(697, 64, 9417),
+             Vec3(20, 60, 9244),
+             ]
   
   for centre in centres:
     print ("Working on %s" % (centre) )
