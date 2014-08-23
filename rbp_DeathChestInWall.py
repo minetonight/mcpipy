@@ -11,7 +11,7 @@ def main():
   mc.postToChat("Hello MCPIPY World!")
   time.sleep(3) # pause 3 seconds
   #mc.setBlocks(12905 - 200, 60 - 63, -7625-200, -12898 - 200 , 48 - 63, -7631 - 200, block.AIR) # изчистване на блокчето
-  mc.setBlocks(12905 - 200, 60 - 63, -7625-200, 12898 - 200 , 52 - 63, -7631 - 200, block.AIR) # изчистване на блокчето
+  mc.setBlocks(12905 - 200, 60 - 63, -7625-200, 12898 - 200 , 52 - 63, -7631 - 200, block.STONE) # изчистване на блокчето
 
   mc.postToChat("Готово :-)")
   print("McPy програмата завърши")
