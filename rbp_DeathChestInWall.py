@@ -10,7 +10,7 @@ def main():
   # write the rest of your code here...
   mc.postToChat("Hello MCPIPY World!")
   time.sleep(3) # pause 3 seconds
-  mc.setBlocks(12895 - 200, 53 - 63, -7615-200, -12888 - 200 , 50 - 63, -7621 - 200, block.AIR) # изчистване на блокчето
+  mc.setBlocks(12905 - 200, 60 - 63, -7625-200, -12898 - 200 , 48 - 63, -7631 - 200, block.AIR) # изчистване на блокчето
   mc.postToChat("Готово :-)")
   print("McPy програмата завърши")
 
