@@ -23,9 +23,9 @@ def eat():
 
 def consume(index = 9):
 	key.tap( str(index) )
-	mouse.toggle(True, mouse.RIGHT_BUTTON)
+	mouse.toggle(True, mouse.RIGHT_BUTTON) # press down
 	time.sleep(4)
-	mouse.toggle(False, mouse.RIGHT_BUTTON)
+	mouse.toggle(False, mouse.RIGHT_BUTTON) # release
 	key.tap('1') # sword is at 1
 #eof consume
 
@@ -40,6 +40,9 @@ def drink(water_supplies):
   
   return drink_counter < water_supplies
 #eof drink
+
+
+
 
 #"presume minecraft is open"
 autopy.alert.alert("Aim at your XP farm and start")
@@ -62,4 +65,4 @@ while stop_flag:
 #"-end of main loop-"
 
 print ("You are out of water, enough farming!")
-key.tap(key.K_F4, key.MOD_ALT)
+key.tap(key.K_F4, key.MOD_ALT) # close the game
