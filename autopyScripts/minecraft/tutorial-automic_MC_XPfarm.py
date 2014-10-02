@@ -4,22 +4,32 @@ from autopy import key
 from autopy import mouse
 import time
 
-directions=[]
-drink_counter = 0
+def findBitmapOnScreen(filename_png):
+    """Look for the reference. Tell me if you found it."""
+    reference = autopy.bitmap.Bitmap.open(filename_png)
+    screen = autopy.bitmap.capture_screen()
+
+    pos = screen.find_bitmap(reference)
+    if pos:
+        print "We found him! He's at %s!" % str(pos)
+    else:
+        print "There is no reference... what kind of screen is this?!"
+    
+    return pos
+
 
 def attack():
 	#swing
 	mouse.click()
 	time.sleep(0.3)
-	##pos = mouse.get_pos()
-	##mouse.smooth_move(pos[0], pos[1]+delta)
-	##mouse.smooth_move(pos[0]+10, pos[1]+10)
 
 #eof attack
+
 
 def eat():
   consume(9) # food is at 9
 #eof eat
+
 
 def consume(index = 9):
 	key.tap( str(index) )
@@ -29,11 +39,17 @@ def consume(index = 9):
 	key.tap('1') # sword is at 1
 #eof consume
 
+
+drink_counter = 0
+
 def drink(water_supplies):
   """Returns False if we are out of water"""
-  assert water_supplies <= 8
+  
+  find_water_bottle()
+  
+  assert water_supplies <= 7
   global drink_counter
-  first_water_index = 1
+  first_water_index = 2
 
   consume(drink_counter + first_water_index)
   drink_counter += 1
@@ -41,6 +57,18 @@ def drink(water_supplies):
   return drink_counter < water_supplies
 #eof drink
 
+
+def find_water_bottle():
+  key.tap('i') # open inventory
+  time.sleep(1)
+  
+  pos = findBitmapOnScreen('MC_fullBottle.png')
+  mouse.smooth_move(pos[0], pos[1]) # point the bottle
+  time.sleep(3)
+  
+  key.tap('i') # close inventory
+  time.sleep(1)
+#eof find_water_bottle
 
 
 
@@ -52,13 +80,13 @@ start = time.time()
 stop_flag = True
 while stop_flag:
   
-  for i in range(600): # 600
+  for i in range(40):
     attack()
   
   eat()
   
   end = time.time()
-  if (end - start) > 2*6*60: # 2*6*60 every 6 min we lose 1 point thirst
+  if (end - start) > 6*60: # every 6 min we lose 1 point thirst
     stop_flag = drink(3)
     start = end
   
