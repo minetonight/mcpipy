@@ -9,6 +9,8 @@ from random import randint
 print 'Number of arguments:', len(sys.argv), 'arguments.'
 print 'Argument List:', str(sys.argv)
 
+# levels = ["TotSQ":{230,155}, "GT":{230,155}, "CH"::{230,155?}]
+
 if len(sys.argv) < 2:
     direction = -1
     print("going =====>>>>>>>>> using default direction left to right")
@@ -46,14 +48,13 @@ def moveHero():
     mouse.smooth_move(x, y) #minimap
     key.tap('a')
     mouse.click()
-    time.sleep(10)   
+    time.sleep(20)   
 #eof moveHero
 
 def chooseTalent():
     print ("chooseTalent")
-    key.tap('2', key.MOD_CONTROL)
-    key.tap('1', key.MOD_CONTROL)
-    key.tap('3', key.MOD_CONTROL)
+    for i in range(3):
+        key.tap(str(randint(1,5)), key.MOD_CONTROL)
 #eof chooseTalent
 
 def useTalents():
@@ -67,12 +68,16 @@ def useTalents():
         time.sleep(1)
         key.tap(char)
         mouse.click(mouse.RIGHT_BUTTON)
-        
-    
 #eof useTalents    
 
-while True:
+def useHeartStone():
+    key.tap('b')
+    time.sleep(10)
+# eof useHeartStone
+
+while True:    
+    chooseTalent()
     moveHero()
     useTalents()
-    chooseTalent()
+    useHeartStone()
     
