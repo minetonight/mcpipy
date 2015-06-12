@@ -9,17 +9,8 @@ from random import randint
 print 'Number of arguments:', len(sys.argv), 'arguments.'
 print 'Argument List:', str(sys.argv)
 
-# levels = ["TotSQ":{230,155}, "GT":{230,155}, "CH"::{230,155?}]
+# levels = ["TotSQ":{230,155}, "GT":{230,155}, "CH":{230,155}, "DS":{230,155}, "HM":{250,235}, "BB":{230,155}, "DT":{230,155?}]
 
-if len(sys.argv) < 2:
-    direction = -1
-    print("going =====>>>>>>>>> using default direction left to right")
-    print("give a parameter to use right to left")
-if len(sys.argv) > 1:
-    direction = 1
-    print(" going <<<<<<========= right to left direction")
-    print("run without parameter to use left to right")
-    
 width, height = autopy.screen.get_size()
 
 
@@ -40,15 +31,21 @@ def moveHero():
     # mouse.click(mouse.RIGHT_BUTTON)
     
     ###use mini map
-    x = width-230 # GT map
-    y = height-155 # GT map
+    x = width-230 # BB map
+    y = height-155 # BB map
     
-    x = x - randint(5,50)*direction # ahead
-    y = y - randint(-10,10)
-    mouse.smooth_move(x, y) #minimap
-    key.tap('a')
-    mouse.click()
-    time.sleep(20)   
+    for i in range(3):
+        x = x - randint(-50,50) # ahead
+        y = y - randint(-50,50) 
+        #y = y - randint(0,1)*(235-155) # haunted mines offset
+        
+        mouse.smooth_move(x, y) #minimap
+        key.tap('a')
+        
+        #TODO ALT callout
+        
+        mouse.click()
+        time.sleep(16)
 #eof moveHero
 
 def chooseTalent():
@@ -62,22 +59,45 @@ def useTalents():
     x = width/2
     y = height/2
     for char in ['q', 'w', 'e', 'r', 'd', '1', '2', '3', '4', '5']:
-        mouse.smooth_move(x-randint(0,100)*direction, y-randint(0,100)) #ahead
+        mouse.smooth_move(x-randint(-100,100), y-randint(100,100)) #ahead
         key.tap(char)
         mouse.click()
-        time.sleep(1)
+        time.sleep(0.5)
         key.tap(char)
         mouse.click(mouse.RIGHT_BUTTON)
 #eof useTalents    
 
 def useHeartStone():
     key.tap('b')
-    time.sleep(10)
+    time.sleep(7)
 # eof useHeartStone
 
-while True:    
+def startMatch():
+    print ("startMatch")
+    x = width/2
+    y = height - 105 # find "Ready" button
+    
+    mouse.smooth_move(x, y)
+    mouse.click()
+    time.sleep(0.5)
+#eof startMatch
+
+def endMatch():
+    print ("startMatch")
+    x = 50
+    y = height - 100 # find "Leave" button
+    
+    mouse.smooth_move(x, y)
+    mouse.click()
+    time.sleep(0.5)
+    mouse.click()
+#eof endMatch
+
+while True:
+
+    startMatch()
     chooseTalent()
     moveHero()
     useTalents()
     useHeartStone()
-    
+    endMatch()
