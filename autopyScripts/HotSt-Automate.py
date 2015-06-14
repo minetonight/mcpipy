@@ -18,8 +18,8 @@ print ("")
 print ("You have 10 seconds")
 time.sleep(10)
 
-def moveHero():
-    print ("moveHero")
+def goFight():
+    print ("goFight")
     
     ###move back and forth
     # x = width/2
@@ -35,6 +35,8 @@ def moveHero():
     y = height-155 # BB map
     
     for i in range(3):
+        chooseTalent()
+    
         x1 = x - randint(-50,50) # ahead
         y1 = y - randint(-50,50) 
         #y = y - randint(0,1)*(235-155) # haunted mines offset
@@ -51,7 +53,7 @@ def moveHero():
         mouse.click()
         time.sleep(16)
         useTalents()
-#eof moveHero
+#eof goFight
 
 def chooseTalent():
     print ("chooseTalent")
@@ -101,8 +103,6 @@ def endMatch():
 while True:
 
     startMatch()
-    chooseTalent()
-    moveHero()
-    useTalents()
+    goFight()
     useHeartStone()
     endMatch()
