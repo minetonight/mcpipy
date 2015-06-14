@@ -35,17 +35,22 @@ def moveHero():
     y = height-155 # BB map
     
     for i in range(3):
-        x = x - randint(-50,50) # ahead
-        y = y - randint(-50,50) 
+        x1 = x - randint(-50,50) # ahead
+        y1 = y - randint(-50,50) 
         #y = y - randint(0,1)*(235-155) # haunted mines offset
         
-        mouse.smooth_move(x, y) #minimap
-        key.tap('a')
+        mouse.smooth_move(x1, y1) # pos on minimap
         
-        #TODO ALT callout
+        #ALT callout
+        key.toggle(key.K_ALT, True)
+        mouse.click()
+        key.toggle(key.K_ALT, False)
         
+        
+        key.tap('a') # attack move
         mouse.click()
         time.sleep(16)
+        useTalents()
 #eof moveHero
 
 def chooseTalent():
