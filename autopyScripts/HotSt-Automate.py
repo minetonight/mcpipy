@@ -31,14 +31,17 @@ def goFight():
     # mouse.click(mouse.RIGHT_BUTTON)
     
     ###use mini map
-    x = width-230 # BB map
-    y = height-155 # BB map
+    x = width-((230+250)/2) # mid btw all maps and HM
+    y = height-((155+235)/2) # mid btw all maps and HM
+    
+    #unmount
+    key.tap('z')
     
     for i in range(3):
         chooseTalent()
     
         x1 = x - randint(-50,50) # ahead
-        y1 = y - randint(-50,50) 
+        y1 = y - randint(-20,20) # surely within maps
         #y = y - randint(0,1)*(235-155) # haunted mines offset
         
         mouse.smooth_move(x1, y1) # pos on minimap
@@ -48,10 +51,13 @@ def goFight():
         mouse.click()
         key.toggle(key.K_ALT, False)
         
+        #mount
+        key.tap('z')
+        time.sleep(1.5)
         
         key.tap('a') # attack move
         mouse.click()
-        time.sleep(16)
+        time.sleep(18) # time to cross half the map
         useTalents()
 #eof goFight
 
@@ -66,7 +72,7 @@ def useTalents():
     x = width/2
     y = height/2
     for char in ['q', 'w', 'e', 'r', 'd', '1', '2', '3', '4', '5']:
-        mouse.smooth_move(x-randint(-100,100), y-randint(100,100)) #ahead
+        mouse.smooth_move(x-randint(-300,300), y-randint(200,200)) 
         key.tap(char)
         mouse.click()
         time.sleep(0.5)
