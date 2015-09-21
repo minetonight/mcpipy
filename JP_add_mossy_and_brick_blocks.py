@@ -3,6 +3,7 @@
 import mcpi.minecraft as minecraft #import the minecraft.py module from the minecraft directory
 import mcpi.block as block #import minecraft block module
 import server # defines where we connect, check server.py
+
 mc = minecraft.Minecraft.create(server.address)
 
 def fill(start_x, start_y, start_z, length, tall, wide, ID):
