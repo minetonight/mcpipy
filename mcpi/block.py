@@ -18,7 +18,7 @@ class Block:
         return iter((self.id, self.data))
         
     def __repr__(self):
-        return "Block(%d, %d)"%(self.id, self.data)
+        return "%d, %d"%(self.id, self.data)
 
 AIR                 = Block(0)
 STONE               = Block(1)
