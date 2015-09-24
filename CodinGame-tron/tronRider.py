@@ -81,27 +81,36 @@ class Controller:
     def isValidMove(self, moveStr):
         pos = self.getNextPos([self.x, self.y], moveStr)
         
-        if self.field[pos[0]][pos[1]] <= EMPTY_CELL:
+        _x = pos[0]
+        _y = pos[1]
+        
+        if (0 < _x >= WIDTH) or (0 < _y >= HEIGHT):
+            return False
+        
+        if self.field[_x][_y] <= EMPTY_CELL:
             
             return True
         else:
-            print >> sys.stderr, "val is " + str(self.field[pos[0]][pos[1]])
+            print >> sys.stderr, "val is " + str(self.field[_x][_y])
             return False
     #eof isValidMove
 
 
     def getNextPos(self, currPos, moveStr):
+        
+        print >> sys.stderr,"currPos = " + str(currPos)
         nextPos = [currPos[0], currPos[1]]
         
-        if dir == "LEFT":
+        if moveStr == "LEFT":
             nextPos[0] = currPos[0] - 1
-        if dir == "RIGHT":
+        if moveStr == "RIGHT":
             nextPos[0] = currPos[0] + 1
-        if dir == "DOWN":
+        if moveStr == "DOWN":
             nextPos[1] = currPos[1] + 1
-        if dir == "UP":
+        if moveStr == "UP":
             nextPos[1] = currPos[1] - 1
-            
+
+        print >> sys.stderr,"nextPos = " + str(nextPos)    
         return nextPos
     #eof getNextPos
 
