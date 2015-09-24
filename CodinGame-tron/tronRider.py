@@ -7,6 +7,10 @@ WIDTH = 30
 HEIGHT = 20
 
 
+def debug(str):
+    print >> sys.stderr, str
+#eof debug
+
 
 def display (two_d_array):
     #""" To debug: print >> sys.stderr, 'Debug messages...' """
@@ -59,11 +63,13 @@ class Controller:
         
         flag = True
         move = ""
+        dir = 0
         
         while flag:
         
-            dir = rand(1,4)
-            print >> sys.stderr, "dir = "+str(dir)
+            dir = dir + 1 # blind walker touching
+            if self.verbose:
+                debug "dir = "+str(dir)
             if dir == 1:
                 move = "LEFT"
             if dir == 2:
@@ -78,27 +84,28 @@ class Controller:
         return move
     #eof chooseDirection
     
+    
     def isValidMove(self, moveStr):
         pos = self.getNextPos([self.x, self.y], moveStr)
         
         _x = pos[0]
         _y = pos[1]
         
-        if (0 < _x >= WIDTH) or (0 < _y >= HEIGHT):
+        if not (0 < _x >= WIDTH) or not (0 < _y >= HEIGHT):
             return False
         
         if self.field[_x][_y] <= EMPTY_CELL:
             
             return True
         else:
-            print >> sys.stderr, "val is " + str(self.field[_x][_y])
+            debug "val is " + str(self.field[_x][_y])
             return False
     #eof isValidMove
 
 
     def getNextPos(self, currPos, moveStr):
         
-        print >> sys.stderr,"currPos = " + str(currPos)
+        debug "currPos = " + str(currPos)
         nextPos = [currPos[0], currPos[1]]
         
         if moveStr == "LEFT":
@@ -110,7 +117,7 @@ class Controller:
         if moveStr == "UP":
             nextPos[1] = currPos[1] - 1
 
-        print >> sys.stderr,"nextPos = " + str(nextPos)    
+        debug "nextPos = " + str(nextPos)    
         return nextPos
     #eof getNextPos
 
