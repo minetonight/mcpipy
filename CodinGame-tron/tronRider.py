@@ -6,17 +6,20 @@ EMPTY_CELL = 0
 WIDTH = 30
 HEIGHT = 20
 
+
+
 def display (two_d_array):
+    #""" To debug: print >> sys.stderr, 'Debug messages...' """
     print >> sys.stderr, "display"
     
     for x in range(WIDTH):
-		for y in range(HEIGHT):
-			element = two_d_array[x][y]
-			if element == EMPTY_CELL:
-				print >> sys.stderr,"*",
-			else:
-			    print >> sys.stderr, element,
-		print >> sys.stderr, '\n'
+        for y in range(HEIGHT):
+            element = two_d_array[x][y]
+            if element == EMPTY_CELL:
+                print >> sys.stderr,"*",
+            else:
+                print >> sys.stderr, element,
+        print >> sys.stderr, '\n' 
 #eof display
 
 class Controller:
@@ -26,16 +29,82 @@ class Controller:
         for col in range(len(self.field)):
             self.field[col] = [EMPTY_CELL] * HEIGHT
         
-	    self.verbose = False
-	    self.verbose = True
+        self.x = -1
+        self.y = -1
+        
+        self.verbose = True
+        self.verbose = False
 	#eof __init__
     
-    def updatePlayersWalls(self, player, pos):
-        self.field[pos[0]] [pos[1]] = player + 1 #non zero elements
+    
+    def setPlayerId(self, playerId):
+        self.playerId = playerId
+    #eof setPlayerId
+    
+    
+    def updatePlayersWalls(self, playerId, pos):
+        self.field[pos[0]] [pos[1]] = playerId + 1 #non zero elements
+        
+        if playerId == self.playerId:
+            self.x = pos[0]
+            self.y = pos[1]
+        
         if self.verbose:
             display(self.field)
     #eof updatePlayersWalls
     
+    
+    def chooseDirection(self):
+        #""" A single line with UP, DOWN, LEFT or RIGHT """
+        
+        flag = True
+        move = ""
+        
+        while flag:
+        
+            dir = rand(1,4)
+            print >> sys.stderr, "dir = "+str(dir)
+            if dir == 1:
+                move = "LEFT"
+            if dir == 2:
+                move = "RIGHT"
+            if dir == 3:
+                move = "DOWN"
+            if dir == 4:
+                move = "UP"
+            
+            flag = not self.isValidMove(move)
+        
+        return move
+    #eof chooseDirection
+    
+    def isValidMove(self, moveStr):
+        pos = self.getNextPos([self.x, self.y], moveStr)
+        
+        if self.field[pos[0]][pos[1]] <= EMPTY_CELL:
+            
+            return True
+        else:
+            print >> sys.stderr, "val is " + str(self.field[pos[0]][pos[1]])
+            return False
+    #eof isValidMove
+
+
+    def getNextPos(self, currPos, moveStr):
+        nextPos = [currPos[0], currPos[1]]
+        
+        if dir == "LEFT":
+            nextPos[0] = currPos[0] - 1
+        if dir == "RIGHT":
+            nextPos[0] = currPos[0] + 1
+        if dir == "DOWN":
+            nextPos[1] = currPos[1] + 1
+        if dir == "UP":
+            nextPos[1] = currPos[1] - 1
+            
+        return nextPos
+    #eof getNextPos
+
 
 # Auto-generated code below aims at helping you parse
 # the standard input according to the problem statement.
@@ -45,26 +114,17 @@ controller = Controller()
 while 1:
      # n: total number of players (2 to 4).
      # p: your player number (0 to 3).
-    n, p = [int(i) for i in raw_input().split()]
-    for i in xrange(n):
+    n, playerID = [int(i) for i in raw_input().split()]
+    controller.setPlayerId(playerID)
+    
+    for playerIndex in xrange(n):
          # x0: starting X coordinate of lightcycle (or -1)
          # y0: starting Y coordinate of lightcycle (or -1)
          # x1: starting X coordinate of lightcycle (can be the same as X0 if you play before this player)
          # y1: starting Y coordinate of lightcycle (can be the same as Y0 if you play before this player)
         x0, y0, x1, y1 = [int(j) for j in raw_input().split()]
-        controller.updatePlayersWalls(i, (x1, y1))
+        controller.updatePlayersWalls(playerIndex, (x1, y1))
 
     # Write an action using print
-    # To debug: print >> sys.stderr, "Debug messages..."
-
     # A single line with UP, DOWN, LEFT or RIGHT
-    dir = rand(1,4)
-    print >> sys.stderr, "dir = "+str(dir)
-    if dir == 1:
-        print "LEFT"
-    if dir == 2:
-        print "RIGHT"
-    if dir == 3:
-        print "DOWN"
-    if dir == 4:
-        print "UP"
+    print controller.chooseDirection()
