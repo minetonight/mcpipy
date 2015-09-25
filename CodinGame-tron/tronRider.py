@@ -1,6 +1,7 @@
 import sys
 import math
 from random import randint as rand
+from collections import OrderedDict
 
 EMPTY_CELL = 0
 WIDTH = 30
@@ -36,6 +37,13 @@ class Controller:
         self.x = -1
         self.y = -1
         
+        self.hasStrategy = False
+        self.strategyDirections = ["UP", "LEFT", "DOWN", "RIGHT"] 
+        self.mustTurn = True
+        self.direction = ""
+        
+        self.deathUpdated = [False, False, False, False]
+        
         self.verbose = True
         self.verbose = False
 	#eof __init__
@@ -47,7 +55,14 @@ class Controller:
     
     
     def updatePlayersWalls(self, playerId, pos):
-        self.field[pos[0]] [pos[1]] = playerId + 1 #non zero elements
+        
+        #TODO remove dead player walls
+        if pos[0] == -1 and not self.deathUpdated[playerId]:
+            self.deletePlayerWalls(playerId)
+            #debug ("player %s died"%(playerId))
+        
+        if pos[0] != -1:
+            self.field[pos[0]] [pos[1]] = playerId + 1 #non zero elements
         
         if playerId == self.playerId:
             self.x = pos[0]
@@ -58,30 +73,66 @@ class Controller:
     #eof updatePlayersWalls
     
     
+    def deletePlayerWalls(self, playerId):
+        
+        for x in range(WIDTH):
+            for y in range(HEIGHT):
+                element = self.field[x][y]
+                if element == playerId + 1:
+                    self.field[x][y] = EMPTY_CELL
+        
+        if self.verbose:
+            display(self.field)
+        #display(self.field)
+        
+        self.deathUpdated[playerId] = True
+    #eof deletePlayerWalls    
+    
+
+    def chooseStrategy(self):
+        
+        if self.x == -1:
+            return
+        
+        dirDict = {}
+        #TODO find closest walls http://stackoverflow.com/a/15179418
+        dirDict["LEFT"] = self.x
+        dirDict["RIGHT"] = (WIDTH - 1) - self.x
+        dirDict["UP"] = self.y
+        dirDict["DOWN"] = (HEIGHT - 1) - self.y
+        
+        dirDict = OrderedDict(sorted(dirDict.items(), key=lambda t: t[1]))
+        #debug(str(dirDict))
+        #debug(str(dirDict.keys()))
+        
+        #self.strategyDirections = ["LEFT", "RIGHT", "UP", "DOWN"] 
+        self.strategyDirections = dirDict.keys()
+        self.direction = self.strategyDirections[0]
+        
+        self.hasStrategy = True
+        
+    #eof chooseStrategy 
+    
+    
     def chooseDirection(self):
         #""" A single line with UP, DOWN, LEFT or RIGHT """
         
-        flag = True
-        move = ""
-        dir = 0
+        if not self.hasStrategy:
+            self.chooseStrategy()
         
-        while flag:
-            
-            dir = dir + 1 # blind walker touching
-            debug("dir = "+str(dir))
-            
-            if dir == 1:
-                move = "LEFT"
-            if dir == 2:
-                move = "RIGHT"
-            if dir == 3:
-                move = "DOWN"
-            if dir == 4:
-                move = "UP"
-            
-            flag = not self.isValidMove(move)
+        self.mustTurn = not self.isValidMove(self.direction)
         
-        return move
+        dir = -1
+        
+        while self.mustTurn:
+            
+            dir = dir + 1
+            debug("dir = %s == %s "%(dir, self.strategyDirections[dir]))
+            
+            self.mustTurn = not self.isValidMove(self.strategyDirections[dir])
+            self.direction = self.strategyDirections[dir]
+            
+        return self.direction
     #eof chooseDirection
     
     
@@ -97,18 +148,19 @@ class Controller:
             return False
         
         if self.field[_x][_y] <= EMPTY_CELL:
-            
-            debug("valid move found")
             return True
         else:
             debug("val is " + str(self.field[_x][_y]))
+            display(self.field)
             return False
     #eof isValidMove
 
 
     def getNextPos(self, currPos, moveStr):
         
-        debug("currPos = " + str(currPos))
+        if self.verbose:
+            debug("currPos = " + str(currPos))
+        
         nextPos = [currPos[0], currPos[1]]
         
         if moveStr == "LEFT":
@@ -119,8 +171,10 @@ class Controller:
             nextPos[1] = currPos[1] + 1
         if moveStr == "UP":
             nextPos[1] = currPos[1] - 1
-
-        debug("nextPos = " + str(nextPos))
+        
+        if self.verbose:
+            debug("nextPos = " + str(nextPos))
+        
         return nextPos
     #eof getNextPos
 
