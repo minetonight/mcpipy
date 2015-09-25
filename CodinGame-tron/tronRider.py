@@ -66,10 +66,10 @@ class Controller:
         dir = 0
         
         while flag:
-        
+            
             dir = dir + 1 # blind walker touching
-            if self.verbose:
-                debug "dir = "+str(dir)
+            debug("dir = "+str(dir))
+            
             if dir == 1:
                 move = "LEFT"
             if dir == 2:
@@ -91,21 +91,24 @@ class Controller:
         _x = pos[0]
         _y = pos[1]
         
-        if not (0 < _x >= WIDTH) or not (0 < _y >= HEIGHT):
+        if ((not (0 <= _x < WIDTH)) or (not (0 <= _y < HEIGHT))):
+            
+            debug("%s , %s is out of bounds"%(_x, _y))
             return False
         
         if self.field[_x][_y] <= EMPTY_CELL:
             
+            debug("valid move found")
             return True
         else:
-            debug "val is " + str(self.field[_x][_y])
+            debug("val is " + str(self.field[_x][_y]))
             return False
     #eof isValidMove
 
 
     def getNextPos(self, currPos, moveStr):
         
-        debug "currPos = " + str(currPos)
+        debug("currPos = " + str(currPos))
         nextPos = [currPos[0], currPos[1]]
         
         if moveStr == "LEFT":
@@ -117,7 +120,7 @@ class Controller:
         if moveStr == "UP":
             nextPos[1] = currPos[1] - 1
 
-        debug "nextPos = " + str(nextPos)    
+        debug("nextPos = " + str(nextPos))
         return nextPos
     #eof getNextPos
 
