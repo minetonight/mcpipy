@@ -15,8 +15,8 @@ width, height = autopy.screen.get_size()
 
 
 print ("")
-print ("You have 10 seconds")
-time.sleep(10)
+print ("You have 5 seconds")
+time.sleep(5)
 
 def goFight():
     print ("goFight")
@@ -32,16 +32,19 @@ def goFight():
     
     ###use mini map
     x = width-((230+250)/2) # mid btw all maps and HM
-    y = height-((155+235)/2) # mid btw all maps and HM
+    y = height+50-((155+235)/2) # mid btw all maps and HM
     
     #unmount
     key.tap('z')
     
+    direction = 1
+    
     for i in range(3):
         chooseTalent()
-    
-        x1 = x - randint(-50,50) # ahead
-        y1 = y - randint(-20,20) # surely within maps
+        
+        direction = direction * (-1) # toggle directions
+        x1 = x - 70 * direction 
+        y1 = y - randint(-10,10) # surely within maps
         #y = y - randint(0,1)*(235-155) # haunted mines offset
         
         mouse.smooth_move(x1, y1) # pos on minimap
@@ -106,9 +109,12 @@ def endMatch():
     mouse.click()
 #eof endMatch
 
+count=0
 while True:
-
+	
+    print ("count =" + str(count))
     startMatch()
     goFight()
     useHeartStone()
     endMatch()
+    count = count+1
