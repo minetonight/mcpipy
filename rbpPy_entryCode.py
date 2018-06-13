@@ -6,4 +6,4 @@ groupname = "140 City Py - int 00:00"
 
 hash_object = hashlib.md5(groupname.encode())
 print("The self-enrollment key for group %s is:" % (groupname))
-print(hash_object.hexdigest()[:8])
+print(hash_object.hexdigest()[:8].upper()+"py")
